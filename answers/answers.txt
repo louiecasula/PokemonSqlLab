@@ -1,0 +1,24 @@
+Part 2
+    1) The types of pokemon are:
+        Normal
+        Water
+        Grass
+        Rock
+        Fire
+        Ground
+        Poison
+        Bug
+        Electric
+        Dragon
+        Steel
+        Dark
+        Fighting
+        Psychic
+        Ghost
+        Fairy
+        Ice
+        Flying
+    2) The pokemon with id 45 is Eevee.
+    3) There are 656 pokemon in the db.
+    4) There are 18 types.
+    5) There are 316 pokemon that have a secondary type.
