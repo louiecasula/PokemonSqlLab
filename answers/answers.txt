@@ -31,3 +31,11 @@ Part 3
 
 
 Part 4
+    SELECT pokemons.name "Pokemon Name", trainers.trainername "Trainer Name", pokemon_trainer.pokelevel "Level",
+    ptype.name "Primary Type", stype.name "Secondary Type"
+    FROM pokemons
+    JOIN pokemon_trainer ON pokemon_trainer.pokemon_id = pokemons.id
+    JOIN trainers ON trainers.trainerID = pokemon_trainer.trainerID
+    JOIN types ptype ON pokemons.primary_type = ptype.id
+    LEFT JOIN types stype ON pokemons.secondary_type = stype.id;
+
