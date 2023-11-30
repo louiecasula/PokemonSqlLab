@@ -1,24 +1,33 @@
 Part 2
-    1) The types of pokemon are:
-        Normal
-        Water
-        Grass
-        Rock
-        Fire
-        Ground
-        Poison
-        Bug
-        Electric
-        Dragon
-        Steel
-        Dark
-        Fighting
-        Psychic
-        Ghost
-        Fairy
-        Ice
-        Flying
-    2) The pokemon with id 45 is Eevee.
-    3) There are 656 pokemon in the db.
-    4) There are 18 types.
-    5) There are 316 pokemon that have a secondary type.
+    1) SELECT name FROM types;
+    2) SELECT name FROM pokemons WHERE id = "45";
+    3) SELECT COUNT(name) FROM pokemons;
+    4) SELECT COUNT(name) FROM types;
+    5) SELECT COUNT(name) FROM pokemons WHERE secondary_type IS NOT NULL;
+
+Part 3
+    1) SELECT pokemons.name "Pokemon", types.name "Type" FROM pokemons
+       JOIN types ON pokemons.primary_type = types.id;
+    2) SELECT pokemons.name "Pokemon", types.name "Secondary Type" FROM pokemons
+       JOIN types ON pokemons.secondary_type = types.id
+       WHERE pokemons.name = "Rufflet";
+    3) SELECT name "Pokemon" FROM pokemons
+       JOIN pokemon_trainer ON pokemons.id = pokemon_trainer.pokemon_id
+       WHERE pokemon_trainer.trainerID = "303";
+    4) SELECT types.name "Secondary Type", COUNT(pokemons.name) "Total Pokemon" FROM pokemons
+       JOIN types ON pokemons.secondary_type = types.id
+       WHERE pokemons.secondary_type = (SELECT id FROM types WHERE name = "Poison")
+       GROUP BY types.name;
+    5) SELECT types.name "Primary Type", COUNT(pokemons.name) "Total Pokemon" FROM pokemons
+       JOIN types ON pokemons.primary_type = types.id
+       GROUP BY types.name;
+    6) SELECT COUNT(pokemon_id) "Total Pokemon Over Lvl 100" FROM pokemon_trainer WHERE pokelevel > 99;
+    7) SELECT COUNT(*) "Pokemon Owned by 1 Trainer"
+       FROM (
+             SELECT pokemon_id FROM pokemon_trainer
+             GROUP BY pokemon_id
+             HAVING COUNT(pokemon_id) = 1
+             ) p;
+
+
+Part 4
