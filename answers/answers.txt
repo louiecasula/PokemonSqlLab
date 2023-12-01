@@ -32,10 +32,35 @@ Part 3
 
 Part 4
     SELECT pokemons.name "Pokemon Name", trainers.trainername "Trainer Name", pokemon_trainer.pokelevel "Level",
-    ptype.name "Primary Type", stype.name "Secondary Type"
+        ptype.name "Primary Type", stype.name "Secondary Type"
     FROM pokemons
     JOIN pokemon_trainer ON pokemon_trainer.pokemon_id = pokemons.id
     JOIN trainers ON trainers.trainerID = pokemon_trainer.trainerID
     JOIN types ptype ON pokemons.primary_type = ptype.id
-    LEFT JOIN types stype ON pokemons.secondary_type = stype.id;
+    LEFT JOIN types stype ON pokemons.secondary_type = stype.id
+    GROUP BY trainers.trainerID
+    ORDER BY AVG(pokemon_trainer.pokelevel) DESC;
 
+    SELECT trainers.trainerID "ID", trainers.trainername "Trainer Name", AVG(pokemon_trainer.pokelevel) "Average Pokemon Level"
+    FROM pokemon_trainer
+    JOIN trainers ON trainers.trainerID = pokemon_trainer.trainerID
+    GROUP BY ID
+    ORDER BY AVG(pokemon_trainer.pokelevel) DESC;
+
+    SELECT pokemons.name "Pokemon Name", trainers.trainername "Trainer Name", pokemon_trainer.pokelevel "Level",
+        ptype.name "Primary Type", stype.name "Secondary Type"
+        FROM (
+            SELECT trainerID, AVG(pokelevel) Average, pokemon_id
+                FROM pokemon_trainer
+                GROUP BY trainerID, pokemon_id
+        ) AS rank
+    JOIN trainers ON trainers.trainerID = rank.trainerID
+    JOIN pokemons ON rank.pokemon_id = pokemons.id
+    JOIN types ptype ON pokemons.primary_type = ptype.id
+    LEFT JOIN types stype ON pokemons.secondary_type = stype.id
+    ORDER BY rank.Average DESC, trainerID;
+
+    SELECT trainerID, AVG(pokelevel), pokemon_id
+    FROM pokemon_trainer
+    GROUP BY trainerID, pokemon_id
+    ORDER BY AVG(pokelevel) DESC, trainerID;
